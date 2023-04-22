@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base href="/">
+    <meta charset="utf-8" />
+    <link rel="icon" href="<%= require("../public/favicon.svg") %>" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="<%= require("../public/favicon.svg") %>" type="image/svg+xml" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#dddddd" />
+    <meta name="description" content="pop-shooter" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    
+    <% for (var cssFile of htmlWebpackPlugin.files.css) { %>
+      <% if (isInline) { %>
+    <style><%= compilation.getAsset(cssFile.substr(htmlWebpackPlugin.files.publicPath.length)).source.source() %></style>
+      <% } else { %>
+    <link href="<%= cssFile %>" rel="stylesheet">
+      <% } %>
+    <% } %>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <% for (var jsFile of htmlWebpackPlugin.files.js) { %>
+      <% if (isInline) { %>
+    <script><%= compilation.getAsset(jsFile.substr(htmlWebpackPlugin.files.publicPath.length)).source.source() %></script>
+      <% } else { %>
+    <script src="<%= jsFile %>"></script>
+      <% } %>
+    <% } %>
+  </body>
+</html>
